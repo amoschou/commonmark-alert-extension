@@ -4,7 +4,7 @@ namespace AMoschou\CommonMark\Alert;
 
 use League\CommonMark\Renderer\ChildNodeRendererInterface;
 use League\CommonMark\Renderer\NodeRendererInterface;
-use League\CommonMark\Util\HtmlElement;n
+use League\CommonMark\Util\HtmlElement;
 
 class AlertRenderer implements NodeRendererInterface
 {
