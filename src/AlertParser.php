@@ -49,9 +49,9 @@ class AlertParser implements InlineParserInterface
         $container->parent()->data->append('attributes/class', "alert-{$class}");
 
         $child = match ($inlineContext->getFullMatch()) {
-            '[!NOTE]' => new AlertHeading('note'),
-            '[!IMPORTANT]' => new AlertHeading('important'),
-            '[!WARNING]' => new AlertHeading('warning'),
+            '[!NOTE]' => new Alert('note'),
+            '[!IMPORTANT]' => new Alert('important'),
+            '[!WARNING]' => new Alert('warning'),
         };
 
         $inlineContext->getContainer()->appendChild($child));
