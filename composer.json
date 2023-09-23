@@ -1,0 +1,21 @@
+{
+    "name": "amoschou/commonmark-alert-extension",
+    "description": "Extension for blockquote alerts for CommonMark",
+    "homepage": "https://github.com/amoschou/commonmark-alert-extension",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "amoschou",
+            "email": "4948673+amoschou@users.noreply.github.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "AMoschou\\CommonMark\\Alert\\": "src/",
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": false,
+    "extra": {}
+}
