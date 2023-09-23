@@ -10,7 +10,7 @@ class Alert extends AbstractInline
 
     public function __construct(string $type)
     {
-        parent::__construct();`
+        parent::__construct();
 
         $this->setType($type);
     }
