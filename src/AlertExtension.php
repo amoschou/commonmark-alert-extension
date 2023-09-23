@@ -10,7 +10,7 @@ final class AlertExtension implements ExtensionInterface
     public function register(EnvironmentBuilderInterface $environment): void
     {
         $environment
-            ->addInlineParser(new AlertParser(), 20)
+            ->addInlineParser(new AlertParser())
             ->addRenderer(Alert::class, new AlertRenderer(), 0);
     }
 }
