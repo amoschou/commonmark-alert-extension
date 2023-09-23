@@ -34,7 +34,7 @@ class Alert extends AbstractInline
         };
     }
 
-    public function getOcticon()
+    public function getIcon()
     {
         return match ($this->getType()) {
             'note' => 'info',
