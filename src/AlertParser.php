@@ -1,12 +1,12 @@
 <?php
 
+namespace AMoschou\CommonMark\Alert;
+
 use League\CommonMark\Parser\Inline\InlineParserInterface;
 use League\CommonMark\Parser\Inline\InlineParserMatch;
 
 use League\CommonMark\Extension\CommonMark\Node\Block\BlockQuote;
 use League\CommonMark\Node\Block\Paragraph;
-
-use AlertHeading;
 
 class AlertParser implements InlineParserInterface
 {
