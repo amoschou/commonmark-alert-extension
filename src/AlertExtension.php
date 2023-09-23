@@ -1,5 +1,7 @@
 <?php
 
+namespace AMoschou\CommonMark\Alert;
+
 use League\CommonMark\Extension\ExtensionInterface;
 use League\CommonMark\Environment\ConfigurableEnvironmentInterface;
 
