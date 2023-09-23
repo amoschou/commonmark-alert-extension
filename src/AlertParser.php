@@ -40,6 +40,14 @@ class AlertParser implements InlineParserInterface
 
         $cursor->advanceBy($inlineContext->getFullMatchLength());
 
+        $class = match ($inlineContext->getFullMatch()) {
+            '[!NOTE]' => 'note',
+            '[!IMPORTANT]' => 'important',
+            '[!WARNING]' => 'warning',
+        };
+
+        $container->parent()->data->append('attributes/class', "alert-{$class}");
+
         $child = match ($inlineContext->getFullMatch()) {
             '[!NOTE]' => new AlertHeading('note'),
             '[!IMPORTANT]' => new AlertHeading('important'),
