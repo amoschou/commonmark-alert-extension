@@ -54,7 +54,7 @@ class AlertParser implements InlineParserInterface
             '[!WARNING]' => new Alert('warning'),
         };
 
-        $inlineContext->getContainer()->appendChild($child));
+        $inlineContext->getContainer()->appendChild($child);
 
         return true;
     }
