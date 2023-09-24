@@ -1,63 +1,55 @@
 <?php
 
+declare(strict_types=1);
+
 namespace AMoschou\CommonMark\Alert;
 
-use League\CommonMark\Extension\CommonMark\Node\Block\BlockQuote;
-use League\CommonMark\Node\Block\Paragraph;
-use League\CommonMark\Parser\Inline\InlineParserInterface;
-use League\CommonMark\Parser\Inline\InlineParserMatch;
-use League\CommonMark\Parser\InlineParserContext;
+use AMoschou\CommonMark\Alert\Alert;
+use League\CommonMark\Node\Block\AbstractBlock;
+use League\CommonMark\Parser\Block\AbstractBlockContinueParser;
+use League\CommonMark\Parser\Block\BlockContinue;
+use League\CommonMark\Parser\Block\BlockContinueParserInterface;
+use League\CommonMark\Parser\Cursor;
 
-class AlertParser implements InlineParserInterface
+final class AlertParser extends AbstractBlockContinueParser
 {
-    public function getMatchDefinition(): InlineParserMatch
+    /** @psalm-readonly */
+    private Alert $block;
+
+    // private string $type;
+
+    public function __construct($type)
     {
-        return InlineParserMatch::oneOf(
-            '[!NOTE]',
-            '[!IMPORTANT]',
-            '[!WARNING]'
-        );
+        // $this->type = $type;
+
+        $this->block = new Alert($type);
     }
 
-    public function parse(InlineParserContext $inlineContext): bool
+    public function getBlock(): Alert
     {
-        $container = $inlineContext->getContainer();
+        return $this->block;
+    }
 
-        // Match must come at the beginning of the first paragraph of the block quote
-        // Is this correct?
-        if (
-            $container->hasChildren()
-            || ! (
-                $container instanceof Paragraph
-                && $container->parent()
-                && $container->parent() instanceof BlockQuote
-            )
-        ) {
-            return false;
-        }
-
-        $cursor = $inlineContext->getCursor();
-
-        $cursor->advanceBy($inlineContext->getFullMatchLength());
-
-        $class = match ($inlineContext->getFullMatch()) {
-            '[!NOTE]' => 'note',
-            '[!IMPORTANT]' => 'important',
-            '[!WARNING]' => 'warning',
-        };
-
-        $container->parent()->data->append('attributes/class', "alert-{$class}");
-
-        $child = match ($inlineContext->getFullMatch()) {
-            '[!NOTE]' => new Alert('note'),
-            '[!IMPORTANT]' => new Alert('important'),
-            '[!WARNING]' => new Alert('warning'),
-        };
-
-        $inlineContext->getContainer()->appendChild($child);
-
+    public function isContainer(): bool
+    {
         return true;
     }
+
+    public function canContain(AbstractBlock $childBlock): bool
+    {
+        return true;
+    }
+
+    public function tryContinue(Cursor $cursor, BlockContinueParserInterface $activeBlockParser): ?BlockContinue
+    {
+        if (! $cursor->isIndented() && $cursor->getNextNonSpaceCharacter() === '>') {
+            $cursor->advanceToNextNonSpaceOrTab();
+            $cursor->advanceBy(1);
+            $cursor->advanceBySpaceOrTab();
+
+            return BlockContinue::at($cursor);
+        }
+
+        return BlockContinue::none();
+    }
 }
-
-
