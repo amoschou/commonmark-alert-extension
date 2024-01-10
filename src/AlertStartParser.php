@@ -23,7 +23,7 @@ class AlertStartParser implements BlockStartParserInterface
         $cursor->advanceBy(1);
         $cursor->advanceBySpaceOrTab();
 
-        $title = $cursor->match('/\[\!NOTE\]|\[\!IMPORTANT\]|\[\!WARNING\]/');
+        $title = $cursor->match('/\[\!NOTE\]|\[\!TIP\]|\[\!IMPORTANT\]|\[\!WARNING\]|\[\!CAUTION\]/');
 
         if (is_null($title)) {
             return BlockStart::none();
@@ -31,8 +31,10 @@ class AlertStartParser implements BlockStartParserInterface
 
         $match = match ($title) {
             '[!NOTE]' => 'note',
+            '[!TIP]' => 'tip',
             '[!IMPORTANT]' => 'important',
             '[!WARNING]' => 'warning',
+            '[!CAUTION]' => 'caution',
         };
 
         $cursor->advanceToNextNonSpaceOrTab();
